@@ -1,5 +1,5 @@
 import { IconContext } from 'react-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
 	DayCard,
@@ -46,9 +46,10 @@ function Planning() {
 	const [month, setMonth] = useState<number>(new Date().getMonth());
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [pet, setPet] = useState<PET | null>(null);
+	const [total, setTotal] = useState<number>(0);
 
-	const onOpen = (pet: PET | null) => {
-		setPet(pet);
+	const onOpen = (pillPet: PET | null) => {
+		setPet(pillPet);
 		setIsOpen(true);
 	};
 	const onClose = () => setIsOpen(false);
@@ -60,11 +61,33 @@ function Planning() {
 	};
 
 	const getPetsByDate = (date: Date) => {
-		return PETS.filter((pet: PET) => {
+		const pets = PETS.filter((filteredPet: PET) => {
 			const dateString = date.toLocaleDateString('fr-FR');
-			return pet.dates.includes(dateString);
+			return filteredPet.dates.includes(dateString);
+		});
+		return pets;
+	};
+
+	const getPills = (date: Date) => {
+		return getPetsByDate(date).map((currentPet: PET) => {
+			return (
+				<PetPill
+					key={currentPet._id}
+					currentPet={currentPet}
+					onOpen={() => onOpen(currentPet)}
+				/>
+			);
 		});
 	};
+	
+	useEffect(() => {
+		setTotal(0);
+		calendar.map((date) =>
+			getPetsByDate(date).map((currentPet: PET) => {
+				setTotal((prevTotal) => prevTotal + currentPet.pricePerDay);
+			})
+		);
+	}, [calendar]);
 
 	return (
 		<>
@@ -77,7 +100,7 @@ function Planning() {
 					<h1>
 						{`Planning 
 						${calendar[0]?.toLocaleDateString('fr-FR', { month: 'long' })}
-						${calendar[0]?.getFullYear()}`}
+						${calendar[0]?.getFullYear()} (Total : ${total} €)`}
 					</h1>
 					<IconWrapper>
 						<IconContext.Provider
@@ -109,14 +132,7 @@ function Planning() {
 									<GrFormAdd onClick={() => onOpen(null)} />
 								</IconContext.Provider>
 							</DayCardHeader>
-
-							{getPetsByDate(date).map((currentPet: PET) => (
-								<PetPill
-									key={currentPet._id}
-									currentPet={currentPet}
-									onOpen={() => onOpen(currentPet)}
-								/>
-							))}
+							{getPills(date)}
 						</DayCard>
 					))}
 				</PlanningContent>

@@ -29,8 +29,7 @@ function PetCard({ pet }: { pet: PET | null }) {
 				petType: pet.petType,
 				pricePerDay: pet.pricePerDay,
 			});
-		}
-		else {
+		} else {
 			setFormData({
 				petName: '',
 				petType: '',
@@ -43,10 +42,14 @@ function PetCard({ pet }: { pet: PET | null }) {
 		<PetCardContainer>
 			<PetCardHeader>
 				<img
-					src={pet?.petType === 'chat' ? chat : chien}
-					alt={pet?.petType === 'chat' ? chat : chien}
+					src={formData.petType === 'chat' ? chat : chien}
+					alt={formData.petType === 'chat' ? chat : chien}
 				/>
-				<h2>{pet?.petName}</h2>
+				<h2>
+					{formData.petName === ''
+						? 'Ajouter un animal'
+						: formData.petName}
+				</h2>
 			</PetCardHeader>
 			<PetCardContent>
 				<form action=''>
@@ -71,8 +74,12 @@ function PetCard({ pet }: { pet: PET | null }) {
 						name='pricePerDay'
 						onChange={handleInputChange}
 					/>
-					<button type='submit'>Modifier</button>
-					<button type='submit'>Supprimer</button>
+					<button type='submit'>Valider</button>
+					{formData.petName !== '' &&
+					formData.petType !== '' &&
+					formData.pricePerDay !== 0 ? (
+						<button type='submit'>Supprimer</button>
+					) : null}
 				</form>
 			</PetCardContent>
 		</PetCardContainer>
