@@ -68,25 +68,14 @@ function Planning() {
 		return pets;
 	};
 
-	const getPills = (date: Date) => {
-		return getPetsByDate(date).map((currentPet: PET) => {
-			return (
-				<PetPill
-					key={currentPet._id}
-					currentPet={currentPet}
-					onOpen={() => onOpen(currentPet)}
-				/>
-			);
-		});
-	};
-	
 	useEffect(() => {
-		setTotal(0);
+		let monthlyTotal = 0;
 		calendar.map((date) =>
 			getPetsByDate(date).map((currentPet: PET) => {
-				setTotal((prevTotal) => prevTotal + currentPet.pricePerDay);
+				monthlyTotal += currentPet.pricePerDay;
 			})
 		);
+		setTotal(monthlyTotal);
 	}, [calendar]);
 
 	return (
@@ -132,7 +121,13 @@ function Planning() {
 									<GrFormAdd onClick={() => onOpen(null)} />
 								</IconContext.Provider>
 							</DayCardHeader>
-							{getPills(date)}
+							{getPetsByDate(date).map((currentPet: PET) => (
+								<PetPill
+									key={currentPet._id}
+									currentPet={currentPet}
+									onOpen={() => onOpen(currentPet)}
+								/>
+							))}
 						</DayCard>
 					))}
 				</PlanningContent>
