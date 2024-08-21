@@ -82,7 +82,7 @@ function Planning() {
 		<>
 			<PlanningContainer>
 				<Modal isOpen={isOpen} onClose={onClose}>
-					<PetCard pet={pet} />
+					<PetCard pet={pet} onClose={onClose} />
 				</Modal>
 
 				<PlanningHeader>

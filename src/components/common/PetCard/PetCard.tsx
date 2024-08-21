@@ -11,11 +11,11 @@ interface PET {
 	pricePerDay: number;
 }
 
-function PetCard({ pet }: { pet: PET | null }) {
+function PetCard({ pet, onClose }: { pet: PET | null; onClose: () => void }) {
 	const [formData, setFormData] = useState({
 		petName: '',
 		petType: '',
-		pricePerDay: 0,
+		pricePerDay: '',
 	});
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,28 +27,30 @@ function PetCard({ pet }: { pet: PET | null }) {
 			setFormData({
 				petName: pet.petName,
 				petType: pet.petType,
-				pricePerDay: pet.pricePerDay,
+				pricePerDay: pet.pricePerDay.toString(),
 			});
 		} else {
 			setFormData({
 				petName: '',
 				petType: '',
-				pricePerDay: 0,
+				pricePerDay: '',
 			});
 		}
-	}, [pet]);
+	}, [pet, onClose]);
 
 	return (
 		<PetCardContainer>
 			<PetCardHeader>
 				<img
-					src={formData.petType === 'chat' ? chat : chien}
-					alt={formData.petType === 'chat' ? chat : chien}
+					src={
+						formData.petType.toLowerCase() === 'chat' ? chat : chien
+					}
+					alt={
+						formData.petType.toLowerCase() === 'chat' ? chat : chien
+					}
 				/>
 				<h2>
-					{formData.petName === ''
-						? 'Ajouter un animal'
-						: formData.petName}
+					{formData.petName === '' ? 'Mon nom' : formData.petName}
 				</h2>
 			</PetCardHeader>
 			<PetCardContent>
@@ -62,7 +64,7 @@ function PetCard({ pet }: { pet: PET | null }) {
 					/>
 					<input
 						type='text'
-						placeholder='Je suis un ...'
+						placeholder='Je suis un(e) ...'
 						value={formData.petType}
 						name='petType'
 						onChange={handleInputChange}
@@ -70,16 +72,20 @@ function PetCard({ pet }: { pet: PET | null }) {
 					<input
 						type='text'
 						placeholder='Prix par jour'
-						value={formData.pricePerDay}
+						value={
+							formData.pricePerDay === null
+								? ''
+								: formData.pricePerDay
+						}
 						name='pricePerDay'
 						onChange={handleInputChange}
 					/>
-					<button type='submit'>Valider</button>
-					{formData.petName !== '' &&
-					formData.petType !== '' &&
-					formData.pricePerDay !== 0 ? (
-						<button type='submit'>Supprimer</button>
-					) : null}
+					<div className='button-container'>
+						<button type='submit'>Valider</button>
+						{formData.petName !== '' && formData.petType !== '' ? (
+							<button type='submit'>Supprimer</button>
+						) : null}
+					</div>
 				</form>
 			</PetCardContent>
 		</PetCardContainer>
