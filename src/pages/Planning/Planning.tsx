@@ -86,11 +86,15 @@ function Planning() {
 				</Modal>
 
 				<PlanningHeader>
-					<h1>
-						{`Planning 
-						${calendar[0]?.toLocaleDateString('fr-FR', { month: 'long' })}
-						${calendar[0]?.getFullYear()} (Total : ${total} €)`}
-					</h1>
+					<div>
+						<h1>
+							{`Planning ${calendar[0]?.toLocaleDateString(
+								'fr-FR',
+								{ month: 'long' }
+							)} ${calendar[0]?.getFullYear()}`}
+						</h1>
+						<h1>{`Total : ${total} €`}</h1>
+					</div>
 					<IconWrapper>
 						<IconContext.Provider
 							value={{ className: 'react-icons' }}

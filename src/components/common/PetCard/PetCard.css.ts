@@ -5,51 +5,62 @@ export const PetCardContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
-	aspect-ratio: auto 1 / 1;
 	background-color: var(--clr-primary);
 	color: var(--clr-secondary);
 	font-size: var(--fs-normal);
 `;
 export const PetCardHeader = styled.header`
-	display: grid;
-	grid-template-columns: 1fr 3fr;
+	display: flex;
 	width: 100%;
 	background-color: var(--clr-secondary);
 	color: var(--clr-primary);
 	padding: 1rem;
-	align-items: end;
+	gap: 1rem;
 
 	h2 {
-		font-size: var(--fs-extra-large);
-		margin: 0;
-		padding: 0;
+		font-size: clamp(1.5rem, 3vw, 4rem);
 		color: var(--clr-primary);
+		align-content: flex-end;
 	}
 	img {
-		width: 5rem;
-		height: 5rem;
+		width: clamp(3.5rem, 3vw, 4.5rem);
 		border-radius: 50%;
 		object-fit: cover;
 	}
 `;
 export const PetCardContent = styled.div`
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 1rem;
+	flex-direction: column;
+	position: relative;
+
+	form {
+		display: grid;
+		padding: 1rem;
+		gap: 1rem;
+	}
 
 	input {
+		width: 100%;
+		height: 100%;
 		background: none;
+		padding: 0.2rem;
 		border: none;
-		color: var(--clr-secondary);
-		font-size: 17px;
-		font-weight: 500;
+		border-bottom: 0.5px solid var(--clr-secondary);
+		color: var(--clr-black);
+		font-size: clamp(1.5rem, 3vw, 4rem);
+		font-weight: var(--fw-medium);
 		letter-spacing: 1px;
 		cursor: pointer;
-		position: relative;
-		z-index: 2;
 		outline: none;
 	}
+`;
+export const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-top: 1rem;
+	gap: 1rem;
 
 	button {
 		width: 100%;
@@ -60,14 +71,5 @@ export const PetCardContent = styled.div`
 		font-size: var(--fs-normal);
 		background-color: var(--clr-secondary);
 		color: var(--clr-primary);
-	}
-
-	.button-container {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: 100%;
-		margin-top: 1rem;
-		gap: 1rem;
 	}
 `;

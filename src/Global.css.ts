@@ -27,6 +27,7 @@ export const GlobalStyle = createGlobalStyle`
         --fw-extra-bold: 800;
         --fw-black: 900;
 
+        --clr-black: #777777;
         --clr-primary: #FFF1A0;
         --clr-secondary: #ED8A0A;
         --clr-tertiary: #339966;

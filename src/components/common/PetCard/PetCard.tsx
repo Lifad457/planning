@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { PetCardContainer, PetCardContent, PetCardHeader } from './PetCard.css';
+import {
+	ButtonContainer,
+	PetCardContainer,
+	PetCardContent,
+	PetCardHeader,
+} from './PetCard.css';
 
 import chat from '../../../assets/images/chat.png';
 import chien from '../../../assets/images/chien.png';
@@ -73,19 +78,20 @@ function PetCard({ pet, onClose }: { pet: PET | null; onClose: () => void }) {
 						type='text'
 						placeholder='Prix par jour'
 						value={
-							formData.pricePerDay === null
+							formData.pricePerDay === null ||
+							formData.pricePerDay === ''
 								? ''
 								: formData.pricePerDay
 						}
 						name='pricePerDay'
 						onChange={handleInputChange}
 					/>
-					<div className='button-container'>
+					<ButtonContainer>
 						<button type='submit'>Valider</button>
 						{formData.petName !== '' && formData.petType !== '' ? (
 							<button type='submit'>Supprimer</button>
 						) : null}
-					</div>
+					</ButtonContainer>
 				</form>
 			</PetCardContent>
 		</PetCardContainer>
